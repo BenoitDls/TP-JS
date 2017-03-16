@@ -9,10 +9,12 @@
             outline: none;
             font-family: 'Open Sans', sans-serif;
         }
+
         body {
             padding: 0;
             margin: 0;
         }
+
         .messages {
             padding: 0;
             margin: 0;
@@ -20,10 +22,12 @@
             width: 100vw;
             background: lightgrey;
         }
+
         form {
             height: 100px;
             width: 100vw;
         }
+
         form > textarea {
             width: calc(100vw - 95px);
             height: 80px;
@@ -32,6 +36,23 @@
             resize: none;
             padding: 5px;
         }
+
+        .myButt {
+            height: 30px;
+            vertical-align: top;
+            background: #2196f3;
+            border: none;
+            width: 88px;
+            cursor: pointer;
+            color: white;
+            font-size: 15px;
+            border-radius: 8px;
+        }
+
+        .myInput {
+            border-radius: 8px;
+        }
+
         form > button {
             height: 80px;
             margin-top: 8px;
@@ -43,37 +64,59 @@
             cursor: pointer;
             color: white;
             font-size: 15px;
+            border-radius: 8px;
+
         }
+
         form > button:hover {
             background: #03a9f4;
         }
+
         form > button:active {
             background: #00bcd4;
         }
+
         ul.messages {
             padding-top: 10px;
             overflow: auto;
         }
+
         ul.messages > li {
             width: 90vw;
             background: white;
             min-height: 30px;
-            margin:  0 0 10px 10px;
+            margin: 0 0 10px 10px;
             padding: 5px;
         }
+
         .disabled {
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             position: fixed;
             z-index: 1000;
         }
     </style>
 </head>
 <body>
-<div class="disabled"></div>
+<div class="disabled">
+    <div style="text-align: center">
+        <style type="text/css">
+            span.errors {
+                color: red;
+            }
+        </style>
+
+        <span class="errors"></span>
+        <form method="POST" style="margin-top: 20%">
+            <input class="input1 myInput" type="text" name="login" placeholder="Pseudo">
+            <br>
+            <button class="myButt" type="submit" style="">Connexion</button>
+        </form>
+    </div>
+</div>
 
 <ul class="messages">
     <li>Message de test</li>
@@ -85,6 +128,19 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js
 "></script>
 <script type="text/javascript">
+    $('form').submit(function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: 'login.php',
+            type: 'post',
+            data: $(this).serialize(),
+            success: function (data) {
+                if (data.connected === "true") {
+
+                }
+            }
+        })
+    }
 
 </script>
 </body>

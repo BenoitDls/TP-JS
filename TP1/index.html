@@ -7,7 +7,10 @@
 <body>
 
 <style type="text/css">
-    span.error {
+    span.errors {
+        color: red;
+    }
+    span.errors2 {
         color: red;
     }
 </style>
@@ -48,7 +51,6 @@
                         else {
                             $('.errors').html('Mauvais mot de passe ou email');
                         }
-                        console.log(data)
                     }
                 })
             }
