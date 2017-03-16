@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Chat</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <style type="text/css">
@@ -50,7 +51,7 @@
         }
 
         .myInput {
-            border-radius: 8px;
+            border-radius: 6px;
         }
 
         form > button {
@@ -98,24 +99,21 @@
             position: fixed;
             z-index: 1000;
         }
+
+        .jcp{
+            z-index: 1000;
+            position: fixed;
+        }
     </style>
 </head>
 <body>
-<div class="disabled">
-    <div style="text-align: center">
-        <style type="text/css">
-            span.errors {
-                color: red;
-            }
-        </style>
-
-        <span class="errors"></span>
-        <form method="POST" style="margin-top: 20%">
-            <input class="input1 myInput" type="text" name="login" placeholder="Pseudo">
-            <br>
-            <button class="myButt" type="submit" style="">Connexion</button>
-        </form>
-    </div>
+<div class="disabled"></div>
+<div class="jcp" style="text-align: center">
+    <form class="connect" method="POST" style="margin-top: 20%">
+        <input class="input1 myInput" type="text" name="login" placeholder="Pseudo">
+        <br>
+        <button class="myButt" type="submit" style="">Connexion</button>
+    </form>
 </div>
 
 <ul class="messages">
@@ -125,23 +123,25 @@
     <textarea placeholder="message" name="send"></textarea>
     <button type="submit">Envoyer</button>
 </form>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js
-"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript">
-    $('form').submit(function (e) {
+
+    $('form.connect').submit(function (e) {
+        console.log("test");
         e.preventDefault();
         $.ajax({
             url: 'login.php',
             type: 'post',
             data: $(this).serialize(),
             success: function (data) {
-                if (data.connected === "true") {
-
+                if (data.success == true) {
+                    $('.jcp').remove();
+                    $('.disabled').toggleClass('disabled');
                 }
+
             }
         })
-    }
-
+    })
 </script>
 </body>
 </html>
