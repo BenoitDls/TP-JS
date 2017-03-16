@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<style type="text/css">
+    span.error {
+        color: red;
+    }
+</style>
+
+<span class="errors"></span>
+<span class="errors2"></span>
+<form method="POST">
+    <input class="input1" type="text" name="login" placeholder="email">
+    <input class="input2" type="text" name="password" placeholder="password">
+    <button type="submit">Connecter</button>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script>
+    $('form').submit(function (e) {
+        e.preventDefault();
+
+        if ($('.input1').val() != '' && $('.input2').val() != '') {
+            var email = $('.input1').val();
+            var result = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.exec(email);
+            if (!result) { // On vérifie que ce n'est pas null
+                $('.errors').html('L adresse email n est pas valide.');
+                $('input[name="login"]').css("borderColor", "red");
+            }
+            else {
+
+                var pseudo = $('.input1').val();
+                var mail = $('.input2').val();
+
+                $.ajax({
+                    url: 'ajax_login.php',
+                    type: 'post',
+                    data: $(this).serialize(),
+                    success: function (data) {
+                        if (data.connected === "true") {
+                            window.location.href = ' https://www.google.fr';
+                        }
+                        else {
+                            $('.errors').html('Mauvais mot de passe ou email');
+                        }
+                        console.log(data)
+                    }
+                })
+            }
+        }
+        if ($('.input2').val() == '') {
+            $('input[name="password"]').css("borderColor", "red");
+            $('.errors2').html('Le champs password est vide.');
+
+        }
+        if ($('.input1').val() == '') {
+            $('input[name="login"]').css("borderColor", "red");
+            $('.errors').html('Le champs login est vide.');
+        }
+    });
+
+
+</script>
+
+</body>
+</html>
